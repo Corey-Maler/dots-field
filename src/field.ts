@@ -15,17 +15,21 @@ interface FieldOptions {
 
 type Impact = [x: number, y: number, timestamp: number, fx: number, fy: number];
 
-export class Field {
+export class Field<T> {
   private opts: FieldOptions;
-  public dots: Dot[] = [];
+  public dots: Dot<T>[] = [];
   private impacts: Impact[] = [];
   public t: number = 0;
   constructor(opts: Partial<FieldOptions> = {}) {
     this.opts = { memorySize: 200, impactLifetime: 10, ...opts };
   }
 
-  public appendDots(dots: Dot[]) {
+  public appendDots(dots: Dot<T>[]) {
     this.dots.push(...dots);
+  }
+
+  public addDot(dot: Dot<T>) {
+    this.dots.push(dot);
   }
 
   public x = 100;

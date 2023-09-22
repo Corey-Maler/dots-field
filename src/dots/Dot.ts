@@ -12,18 +12,20 @@ function clamMin(x: number, w = 10) {
     return x;
   }
 
-export class Dot {
+export class Dot<T> {
   public x: number;
   public y: number;
+  public readonly ref: T;
 
   public vecX: number = 0;
   public vecY: number = 0;
 
   public t = 0;
 
-  constructor(xOr: number, yOr: number) {
+  constructor(xOr: number, yOr: number, ref: T) {
     this.x = xOr;
     this.y = yOr;
+    this.ref = ref;
   }
 
   update(mx: number, my: number, a: [number, number], dt: number) {

@@ -26,3 +26,15 @@
   align-items: center;
   height: 100vh;
 }
+
+#lorem-ipsum {
+  max-width: 500px;
+  margin: 20px;
+  color: #666;
+}
+
+#lorem-ipsum a, #lorem-ipsum a:visited {
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
