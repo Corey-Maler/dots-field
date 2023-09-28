@@ -1,27 +1,32 @@
+import { Engine } from '.';
 import { Canv } from './canvas';
 import { generateArea } from './dots/generateArea';
-import { Field } from './field';
 
-export const run = (container: HTMLDivElement) => {
-  const field = new Field();
-  const canvas = new Canv(container, field.impact.bind(field));
-  canvas.handleMouseMove();
-  const dots = generateArea(canvas.width, canvas.height, 10, 0);
-  field.appendDots(dots);
-  const upd = () => {
-    field.update();
+export const run = (
+  container: HTMLDivElement,
+  engine: Engine<HTMLSpanElement | number>
+) => {
+  const canvas = new Canv(container);
+  const canvasRect = canvas.boundingRect;
+  const xOffset = canvasRect.left;
+  const yOffset = canvasRect.top;
+  const dots = generateArea(canvas.width, canvas.height, 10, 0, {
+    x: xOffset,
+    y: yOffset,
+  });
+  engine.registerDots(dots);
+
+  const render = () => {
     canvas.drawBegin();
 
-    field.dots.forEach((dot) => {
-      canvas.drawPoint(dot.x, dot.y, dot.vecX, dot.vecY);
+    engine.dots.forEach((dot) => {
+      if (typeof dot.ref === 'number') {
+        canvas.drawPoint(dot.x - xOffset, dot.y - yOffset, dot.vecX, dot.vecY);
+      }
     });
 
     canvas.drawEnd();
-
-    canvas.drawA(canvas.x, canvas.y);
-    requestAnimationFrame(upd);
-    // setTimeout(upd, 100);
   };
 
-  upd();
+  engine.addRenderer(render);
 };

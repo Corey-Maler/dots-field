@@ -13,9 +13,13 @@ export class Canv {
   public get height() {
     return this.canvas.height;
   }
+
+  public get boundingRect() {
+    return this.canvas.getBoundingClientRect();
+  }
+
   constructor(
     div: HTMLDivElement,
-    private onImpact: Field<number>['impact'],
     private bg: string = '#e2e2e2',
     private fg: string = '#666666'
   ) {
@@ -34,20 +38,20 @@ export class Canv {
 
   public handleMouseMove() {
     console.log('move me to the enginge');
-    this.canvas.addEventListener('mousemove', this.mouseMove);
+    // this.canvas.addEventListener('mousemove', this.mouseMove);
   }
 
-  private mouseMove = (e: MouseEvent) => {
-    const rect = this.canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const dx = this.x - x;
-    const dy = this.y - y;
-    this.x = x;
-    this.y = y;
+//   private mouseMove = (e: MouseEvent) => {
+//     const rect = this.canvas.getBoundingClientRect();
+//     const x = e.clientX - rect.left;
+//     const y = e.clientY - rect.top;
+//     const dx = this.x - x;
+//     const dy = this.y - y;
+//     this.x = x;
+//     this.y = y;
 
-    this.onImpact(x, y, dx, dy);
-  };
+//     this.onImpact(x, y, dx, dy);
+//   };
 
   public drawBegin() {
     this.ctx.beginPath();
@@ -60,15 +64,10 @@ export class Canv {
 
   public drawPoint(x: number, y: number, vecX: number, vecY: number) {
     this.ctx.moveTo(x, y);
-    // this.ctx.arc(x, y, 1, 0, 2 * Math.PI);
 
     this.ctx.moveTo(x, y);
 
     const len = Math.sqrt(vecX * vecX + vecY * vecY);
-    // don't even bother
-    // if (len < 1) {
-    //     return;
-    // }
 
     // looks ugly
     const thr = 20;
@@ -76,7 +75,6 @@ export class Canv {
       vecX *= thr / len;
       vecY *= thr / len;
     }
-    // this.ctx.lineTo(x + vecX, y + vecY);
 
     this.ctx.moveTo(x + vecX, y + vecY);
     this.ctx.arc(x + vecX, y + vecY, 1, 0, 2 * Math.PI);

@@ -1,4 +1,4 @@
-import { Dot } from "../dots/Dot";
+import { Dot } from '../dots/Dot';
 
 export function getRenderSpan(
   mode: 'color' | 'position' | 'color-position' = 'position'
@@ -9,18 +9,27 @@ export function getRenderSpan(
       return;
     }
     if (mode === 'position' || mode === 'color-position') {
-      dot.ref.style.transform = `translate(${dot.vecX.toFixed(
+      let vecX = dot.vecX;
+      let vecY = dot.vecY;
+      const len = Math.sqrt(vecX * vecX + vecY * vecY);
+      const thr = 20;
+      if (len > thr) {
+        vecX *= thr / len;
+        vecY *= thr / len;
+      }
+      dot.ref.style.transform = `translate(${vecX.toFixed(
         1
-      )}px, ${dot.vecY.toFixed(1)}px)`;
+      )}px, ${vecY.toFixed(1)}px)`;
     }
     if (mode === 'color' || mode === 'color-position') {
-      const r = Math.min(Math.floor(Math.abs(dot.vecX) * 255), 255);
-      const g = Math.min(Math.floor(Math.abs(dot.vecY) * 255), 255);
+        const scale = 0.1;
+      const r = Math.min(Math.floor(Math.abs(dot.vecX * scale) * 255), 255);
+      const g = Math.min(Math.floor(Math.abs(dot.vecY * scale) * 255), 255);
       const b = Math.min(
-        Math.floor(Math.abs((dot.vecY + dot.vecX) / 2) * 255),
+        Math.floor(Math.abs((dot.vecY + dot.vecX) / 2 * scale) * 255),
         255
       );
-      dot.ref.style.color = `rgb(${r}, ${g}, ${r})`;
+      dot.ref.style.color = `rgb(${r}, ${r}, ${r})`;
     }
   }
 

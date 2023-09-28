@@ -11,30 +11,29 @@ import { generateArea } from './dots/generateArea.ts';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 
-if (app) {
-  run(app);
-} else {
-  console.log('no app found');
-}
+const mainEngine = new Engine<HTMLSpanElement | number>();
 
-const mode: 'color' | 'position' | 'color-position' = 'position';
+mainEngine.followMouse({x: 0, y: 0});
 
-const loremIpsumAnimation = new Engine<HTMLSpanElement>();
 
 const LoremIpsum = document.getElementById('lorem-ipsum');
 if (LoremIpsum) {
-  const liOffset = LoremIpsum?.getBoundingClientRect();
-  const offset = { x: liOffset!.left, y: liOffset!.top };
+  const offset = { x: 0, y: 0};
 
   const loremIpsumSpans = wrapEachWordInSpan(LoremIpsum!);
   const loremIpsumDots = generateDotsOutOfSpans(
     offset,
     loremIpsumSpans,
-    getRenderSpan('color-position')
+    getRenderSpan('color')
   );
 
-  loremIpsumAnimation.registerDots(loremIpsumDots);
-  // loremIpsumAnimation.followMouse(offset);
+  mainEngine.registerDots(loremIpsumDots);
+}
+
+if (app) {
+  run(app, mainEngine);
+} else {
+  console.log('no app found');
 }
 
 const scrollArea: HTMLDivElement | null = document.querySelector('.bg-canvas');
@@ -42,7 +41,7 @@ const scrollArea: HTMLDivElement | null = document.querySelector('.bg-canvas');
 if (scrollArea) {
   const field = new Field<number>();
 
-  const canvas = new Canv(scrollArea, field.impact.bind(field));
+  const canvas = new Canv(scrollArea);
   const dots = generateArea(canvas.width, canvas.height, 5);
   console.log('total amount of dots', dots.length);
 
@@ -99,5 +98,5 @@ if (scrollArea) {
     // setTimeout(upd, 100);
   };
 
-  upd();
+  // upd();
 }

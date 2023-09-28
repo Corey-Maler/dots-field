@@ -4,12 +4,12 @@ import { Field } from './field';
 export class Engine<T> {
   private mouse: [number, number] = [0, 0];
   private field = new Field<T>();
-  private run = false;
-  constructor(
-  ) {
+  public get dots() {
+    return this.field.dots;
   }
-
- 
+  private run = false;
+  private renders: Array<(dots: Dot<T>[]) => void> = [];
+  constructor() {}
 
   public registerDots(dots: Dot<T>[]) {
     this.field.appendDots(dots);
@@ -22,7 +22,8 @@ export class Engine<T> {
   public followMouse(mouseOffset: { x: number; y: number }) {
     document.addEventListener('mousemove', (e) => {
       const rootX = mouseOffset.x;
-      const rootY = mouseOffset.y;
+      // temporary fix
+      const rootY = mouseOffset.y - (document.body.parentElement?.scrollTop ?? 0);
 
       const x = e.clientX - rootX;
       const y = e.clientY - rootY;
@@ -31,11 +32,16 @@ export class Engine<T> {
       const dy = y - this.mouse[1];
 
       this.mouse = [x, y];
+      const force = 1;
 
-      this.impact(x, y, dx / 10, dy / 10);
+      this.impact(x, y, dx * force, dy * force);
     });
 
     this.startLoop();
+  }
+
+  public addRenderer(renderer: (dots: Dot<T>[]) => void) {
+    this.renders.push(renderer);
   }
 
   // private findExplodePoint() {
@@ -75,11 +81,11 @@ export class Engine<T> {
     }
 
     if (!this.run) {
-        this.run = true;
-        this.update();
-        setTimeout(() => {
-            this.run = false;
-        }, 2000);
+      this.run = true;
+      this.update();
+      setTimeout(() => {
+        this.run = false;
+      }, 2000);
     }
   }
 
@@ -113,6 +119,9 @@ export class Engine<T> {
       //   const b = Math.min(Math.floor(Math.abs((dot.vecY + dot.vecX ) / 2) * 255), 255);
       //   dot.ref.style.color = `rgb(${r}, ${g}, ${r})`;
       // }
+    }
+    for (const renderer of this.renders) {
+      renderer(this.field.dots);
     }
   }
 }
