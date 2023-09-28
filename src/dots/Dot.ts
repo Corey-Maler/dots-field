@@ -16,16 +16,18 @@ export class Dot<T> {
   public x: number;
   public y: number;
   public readonly ref: T;
+  public readonly render?: () => void;
 
   public vecX: number = 0;
   public vecY: number = 0;
 
   public t = 0;
 
-  constructor(xOr: number, yOr: number, ref: T) {
+  constructor(xOr: number, yOr: number, ref: T, render?: () => void) {
     this.x = xOr;
     this.y = yOr;
     this.ref = ref;
+    this.render = render;
   }
 
   update(mx: number, my: number, a: [number, number], dt: number) {

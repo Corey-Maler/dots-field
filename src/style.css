@@ -17,6 +17,7 @@
 #app {
   width: 500px;
   height: 200px;
+  max-width: calc(100vw - 40px);
 }
 
 .somePreview {
@@ -24,17 +25,66 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
+  z-index: 2;
+  position: relative;
 }
 
 #lorem-ipsum {
   max-width: 500px;
   margin: 20px;
   color: #666;
+  background: transparent;
 }
 
 #lorem-ipsum a, #lorem-ipsum a:visited {
   color: #333;
   font-weight: bold;
   text-decoration: none;
+}
+
+.scroll-emulation {
+  /* min-height: 2000px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg-canvas {
+  background: red;
+  position: fixed;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.box {
+  margin-top: 100px;
+  width: 500px;
+  max-width: calc(100vw - 40px);
+  height: 200px;
+  border-radius: 10px;
+}
+
+.box1 {
+  background-color: #f44336;
+}
+
+.box2 {
+  background-color: #e91e63;
+}
+
+.box3 {
+  background-color: #9c27b0;
+}
+
+.box4 {
+  background-color: #673ab7;
+}
+
+.box5 {
+  background-color: #3f51b5;
 }

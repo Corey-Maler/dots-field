@@ -48,16 +48,21 @@ export class Field<T> {
     const t = Date.now() / 1000;
     this.t = t;
 
-    this.dots.forEach((dot) => dot.reset());
+    for (const dot of this.dots) {
+      dot.reset();
+    }
 
-    for (const impact of this.impacts) {
-      const [ix, iy, it, fx, fy] = impact;
+    const lifetime = this.opts.impactLifetime;
+    const impacts = this.impacts;
+    const dots = this.dots;
+
+    for (const [ix, iy, it, fx, fy] of impacts) {
       const dt = t - it;
-      if (dt > this.opts.impactLifetime) {
+      if (dt > lifetime) {
         continue;
       }
 
-      for (const dot of this.dots) {
+      for (const dot of dots) {
         dot.update(ix, iy, [fx, fy], dt);
       }
     }

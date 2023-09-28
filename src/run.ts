@@ -5,7 +5,8 @@ import { Field } from './field';
 export const run = (container: HTMLDivElement) => {
   const field = new Field();
   const canvas = new Canv(container, field.impact.bind(field));
-  const dots = generateArea(canvas.width, canvas.height, 10);
+  canvas.handleMouseMove();
+  const dots = generateArea(canvas.width, canvas.height, 10, 0);
   field.appendDots(dots);
   const upd = () => {
     field.update();
