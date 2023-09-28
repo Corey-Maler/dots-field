@@ -20,6 +20,17 @@
   max-width: calc(100vw - 40px);
 }
 
+
+#webgl-app {
+  margin-top: 100px;
+  width: 500px;
+  height: 500px;
+  max-width: calc(100vw - 40px);
+  border: 1px solid #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .somePreview {
   display: flex;
   flex-direction: column;
@@ -52,7 +63,6 @@
 }
 
 .bg-canvas {
-  background: red;
   position: fixed;
   z-index: 0;
   width: 100%;

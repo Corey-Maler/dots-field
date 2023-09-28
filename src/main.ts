@@ -8,12 +8,20 @@ import { getRenderSpan } from './helpers/getRenderSpan.ts';
 import { Field } from './field.ts';
 import { Canv } from './canvas.ts';
 import { generateArea } from './dots/generateArea.ts';
+import { runWebGL } from './webgl';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 
 const mainEngine = new Engine<HTMLSpanElement | number>();
 
 mainEngine.followMouse({x: 0, y: 0});
+
+const webGlAppRoot = document.getElementById('webgl-app');
+
+if (webGlAppRoot) {
+  runWebGL(webGlAppRoot as any);
+}
+
 
 
 const LoremIpsum = document.getElementById('lorem-ipsum');
