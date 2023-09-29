@@ -42,7 +42,10 @@ export class Engine<T> {
   }
 
   public followMouseWithElement(element: HTMLElement) {
-    element.addEventListener('mousemove', (e) => {
+    element.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+    })
+    element.addEventListener('pointermove', (e) => {
       const rootX = element.offsetLeft;
       // temporary fix
       const rootY = element.offsetTop;
