@@ -24,11 +24,11 @@ export function getRenderSpan(
     if (mode === 'color' || mode === 'color-position') {
         const scale = 0.1;
       const r = Math.min(Math.floor(Math.abs(dot.vecX * scale) * 255), 255);
-      const g = Math.min(Math.floor(Math.abs(dot.vecY * scale) * 255), 255);
-      const b = Math.min(
-        Math.floor(Math.abs((dot.vecY + dot.vecX) / 2 * scale) * 255),
-        255
-      );
+      // const g = Math.min(Math.floor(Math.abs(dot.vecY * scale) * 255), 255);
+      // const b = Math.min(
+      //   Math.floor(Math.abs((dot.vecY + dot.vecX) / 2 * scale) * 255),
+      //   255
+      // );
       dot.ref.style.color = `rgb(${r}, ${r}, ${r})`;
     }
   }

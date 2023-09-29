@@ -1,6 +1,6 @@
 import { Engine } from '.';
 import { Canv } from './canvas';
-import { generateArea } from './dots/generateArea';
+import { generateArea } from './helpers/generateArea';
 
 export const run = (
   container: HTMLDivElement,

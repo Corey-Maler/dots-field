@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>example</title>
+    <script src="./dist/field.umd.js"></script>
+    <style>
+        #app {
+            width: 500px;
+            height: 200px;
+            top: 0;
+            left: 0;
+            background: red;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="somePreview">
+      <div id="app"></div>
+    </div>
+  </body>
+  <script>
+    // alert(3);
+    const app = document.getElementById('app');
+    if (app) {
+        const engine = new DotsField.Engine();
+        engine.followMouseWithElement(app);
+
+        const canvas = new DotsField.Canv(app);
+        const dots = DotsField.generateArea(canvas.width, canvas.height, 10, 10);
+
+        engine.registerDots(dots);
+
+        const render = () => {
+    canvas.drawBegin();
+
+    engine.dots.forEach((dot) => {
+      if (typeof dot.ref === 'number') {
+        canvas.drawPoint(dot.x, dot.y, dot.vecX, dot.vecY);
+      }
+    });
+
+    canvas.drawEnd();
+  };
+
+  engine.addRenderer(render);
+    }
+  </script>
+</html>

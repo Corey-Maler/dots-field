@@ -1,4 +1,4 @@
-import { Dot } from './Dot';
+import { Dot } from '../dots/Dot';
 
 export const generateArea = (
   width: number,

@@ -1,5 +1,3 @@
-import { Field } from './field';
-
 export class Canv {
   private root: HTMLDivElement;
   private canvas: HTMLCanvasElement;
@@ -30,28 +28,9 @@ export class Canv {
     this.canvas.width = this.root.offsetWidth;
     this.canvas.height = this.root.offsetHeight;
     this.canvas.style.backgroundColor = bg;
-    console.log('canvas');
-
-    // move mouse move out
-    // this.canvas.addEventListener('mousemove', this.mouseMove);
   }
 
-  public handleMouseMove() {
-    console.log('move me to the enginge');
-    // this.canvas.addEventListener('mousemove', this.mouseMove);
-  }
 
-//   private mouseMove = (e: MouseEvent) => {
-//     const rect = this.canvas.getBoundingClientRect();
-//     const x = e.clientX - rect.left;
-//     const y = e.clientY - rect.top;
-//     const dx = this.x - x;
-//     const dy = this.y - y;
-//     this.x = x;
-//     this.y = y;
-
-//     this.onImpact(x, y, dx, dy);
-//   };
 
   public drawBegin() {
     this.ctx.beginPath();

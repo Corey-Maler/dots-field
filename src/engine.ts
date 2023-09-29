@@ -23,7 +23,29 @@ export class Engine<T> {
     document.addEventListener('mousemove', (e) => {
       const rootX = mouseOffset.x;
       // temporary fix
-      const rootY = mouseOffset.y - (document.body.parentElement?.scrollTop ?? 0);
+      const rootY =
+        mouseOffset.y - (document.body.parentElement?.scrollTop ?? 0);
+
+      const x = e.clientX - rootX;
+      const y = e.clientY - rootY;
+
+      const dx = x - this.mouse[0];
+      const dy = y - this.mouse[1];
+
+      this.mouse = [x, y];
+      const force = 1;
+
+      this.impact(x, y, dx * force, dy * force);
+    });
+
+    this.startLoop();
+  }
+
+  public followMouseWithElement(element: HTMLElement) {
+    element.addEventListener('mousemove', (e) => {
+      const rootX = element.offsetLeft;
+      // temporary fix
+      const rootY = element.offsetTop;
 
       const x = e.clientX - rootX;
       const y = e.clientY - rootY;
@@ -44,32 +66,8 @@ export class Engine<T> {
     this.renders.push(renderer);
   }
 
-  // private findExplodePoint() {
-  //   const explodes = this.root.querySelectorAll(
-  //     '*[data-dots-effect="explosion"]'
-  //   );
-  //   if (explodes.length === 0) {
-  //     return;
-  //   }
-  //   for (const explode of explodes) {
-  //     console.log('exp', explode);
-  //     explode.addEventListener('pointerdown', (e) => {
-  //       e.preventDefault();
-  //       if (e instanceof PointerEvent) {
-  //         const rootX = this.root.offsetLeft;
-  //         const rootY = this.root.offsetTop;
 
-  //         const x = e.clientX - rootX;
-  //         const y = e.clientY - rootY;
-
-  //         // this.impact(x, y, 20, 20);
-  //         this.explosion(x, y);
-  //       }
-  //     });
-  //   }
-  // }
-
-  private explosion(x: number, y: number) {
+  public explosion(x: number, y: number) {
     const dist = 400;
     const angle = Math.random() * Math.PI * 2;
     for (let i = 0; i < 100; i++) {
